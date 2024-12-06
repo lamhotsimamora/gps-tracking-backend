@@ -50,7 +50,34 @@ Route::post('/api-login-mikrotik', function (Request $request) {
     if ($API->connect($ip, $username, $password, $port)) {
         $data['result'] = true;
         session(['ip' => $ip]);
+        session(['username' => $username]);
+        session(['password' => $password]);
+        session(['port' => $port]);
     }
     echo json_encode($data);
+    
+});
+
+Route::post('/api-load-interface', function (Request $request) {
+  
+    $API = new RouterOS();
+
+    $API->debug = false;
+
+    $ip = $request->session()->get('ip');
+    $username = $request->session()->get('username');
+    $password = $request->session()->get('password');
+    $port =$request->session()->get('port');
+
+    if ($API->connect($ip, $username, $password, $port)) {
+            $API->write('/interface/print');
+
+            $READ = $API->read(false);
+            $ARRAY = $API->parseResponse($READ);
+
+            echo json_encode($ARRAY);
+
+            $API->disconnect();
+    }
     
 });

@@ -6,33 +6,49 @@ use App\Http\Controllers\UserController;
 use App\Helpers\RouterOS;
 use Illuminate\Http\Request;
 use App\Http\Middleware\SessionMiddleware;
+use App\Http\Middleware\AdminMiddleware;
+
+function _md5($string){
+    return md5(strlen($string).$string.strlen($string));
+}
 
 Route::get('/', function () {
     return redirect('/admin');
 });
 
+Route::get('/login',function(Request $request){
+    $admins = $request->session()->get('admins');
+    if ($admins){
+        return redirect('admin');
+    }
+    return view("login");
+});
+
 Route::get('/admin',function(){
     return view("admin");
-});
+})->middleware(AdminMiddleware::class);
 
 Route::get('/admin-data',function(){
     return view("admin-data");
-});
+})->middleware(AdminMiddleware::class);
 
 Route::get('/login-mikrotik',function(Request $request){
     if ($request->session()->has('ip')) {
         return redirect('/mikrotik-dashboard');
     }
     return view("login-mikrotik");
-});
+})->middleware(AdminMiddleware::class);
 
-Route::post('/admin-load-data-map', [AdminController::class, 'loadDataMap']);
+Route::post('/admin-load-data-map', [AdminController::class, 'loadDataMap'])->middleware(AdminMiddleware::class);
 
 Route::post('/user-add-coordinate', [UserController::class, 'addCoordinate'])->middleware(SessionMiddleware::class);
 
-Route::post('/admin-load-all-data-map', [AdminController::class, 'loadAllDataMap']);
+Route::post('/admin-load-all-data-map', [AdminController::class, 'loadAllDataMap'])->middleware(AdminMiddleware::class);
 
 Route::post('/admin-api-delete-tracking', [AdminController::class, 'deleteTracking'])->middleware(SessionMiddleware::class);
+
+Route::post('/api-login-admin', [AdminController::class, 'loginAdmin']);
+
 
 Route::get('/mikrotik-dashboard', function (Request $request) {
     $datetime =  now();
@@ -122,7 +138,20 @@ Route::post('api-load-traffic',function(Request $request){
     }
 })->middleware(SessionMiddleware::class);
 
-Route::get('/logout-mikrotik', function () {
-    session()->flush();
+Route::get('/logout-mikrotik', function (Request $request) {
+    $request->session()->forget('ip');
+    $request->session()->forget('username');
+    $request->session()->forget('password');
+    $request->session()->forget('port');
     return redirect('/login-mikrotik');
+});
+
+Route::get('/logout-app', function () {
+    session()->flush();
+    return redirect('/login');
+});
+
+
+Route::get('/md5',function(){
+    return _md5('admin');
 });

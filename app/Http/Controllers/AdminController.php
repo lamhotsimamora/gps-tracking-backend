@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tracking;
+use App\Models\Admins;
 use App\Models\ViewTracking;
 
 class AdminController extends Controller
@@ -28,5 +29,19 @@ class AdminController extends Controller
         $tracking = Tracking::find($id);
 
         return $tracking->delete();
+    }
+
+    public function loginAdmin(Request $request){
+        $username = $request->username;
+        $password = _md5($request->password);
+
+        $count = Admins::where('username', $username)->where('password', $password)->count();
+
+        $result['result'] = false;
+        if ($count > 0) {
+            session(['admins' => true]);
+            $result['result'] = true;
+        }
+        return json_encode($result);
     }
 }

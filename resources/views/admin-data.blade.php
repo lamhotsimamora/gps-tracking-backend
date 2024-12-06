@@ -33,79 +33,76 @@
 
     <div id="app" class="container mx-auto">
         <center>
-            <a href="#"
-                class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    GPS Tracking Real Time
-                </h5>
-                <hr> <br>
-                <p class="font-normal text-gray-700 dark:text-gray-400">
-                    <div role="status">
-                       
-                        <div class="relative overflow-x-auto">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            No
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            User
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Latitude
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Longitude
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Date
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Time
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="data in coordinate" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            @{{data.id}}
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            @{{data.username}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            @{{data.latitude}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            @{{data.longitude}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            @{{data.date}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            @{{data.time}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button @click="deleteData(data.id)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">x</button>
-                                        </td>
-                                    </tr>
-                                    
-                                   
-                                </tbody>
-                            </table>
-                        </div>
 
 
-                    </div>
-                </p>
-            </a>
+<div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Data Coordinate</h5>
+    <hr>
+    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead
+                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            No
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            User
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Latitude
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Longitude
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Date
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Time
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="data in coordinate" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            @{{data.id}}
+                        </th>
+                        <td class="px-6 py-4">
+                            @{{data.username}}
+                        </td>
+                        <td class="px-6 py-4">
+                            @{{data.latitude}}
+                        </td>
+                        <td class="px-6 py-4">
+                            @{{data.longitude}}
+                        </td>
+                        <td class="px-6 py-4">
+                            @{{data.date}}
+                        </td>
+                        <td class="px-6 py-4">
+                            @{{data.time}}
+                        </td>
+                        <td class="px-6 py-4">
+                            <button @click="deleteData(data.id)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">x</button>
+                        </td>
+                    </tr>
+                    
+                   
+                </tbody>
+            </table>
+        </div>
+    </p>
+   
+</div>
+
+
+           
         </center>
     </div>
 

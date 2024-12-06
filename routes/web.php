@@ -28,11 +28,11 @@ Route::get('/login-mikrotik',function(Request $request){
 
 Route::post('/admin-load-data-map', [AdminController::class, 'loadDataMap']);
 
-Route::post('/user-add-coordinate', [UserController::class, 'addCoordinate']);
+Route::post('/user-add-coordinate', [UserController::class, 'addCoordinate'])->middleware(SessionMiddleware::class);
 
 Route::post('/admin-load-all-data-map', [AdminController::class, 'loadAllDataMap']);
 
-Route::post('/admin-api-delete-tracking', [AdminController::class, 'deleteTracking']);
+Route::post('/admin-api-delete-tracking', [AdminController::class, 'deleteTracking'])->middleware(SessionMiddleware::class);
 
 Route::get('/mikrotik-dashboard', function (Request $request) {
     $datetime =  now();

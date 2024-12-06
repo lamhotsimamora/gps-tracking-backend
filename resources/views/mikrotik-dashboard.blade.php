@@ -44,8 +44,10 @@
 
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Data Interface @{{ interface_name }}</h5>
+                <h6 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Data Interface @{{ interface_name }}</h6>
                 <hr>
+                <span class="bg-pink-100 text-pink-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">@{{tx_text}}</span>
+                 <span class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">@{{rx_text}}</span>
 
                 <center><canvas id="myChart" style="width:100%;max-width:700px"></canvas></center>
                 <hr>
@@ -54,15 +56,21 @@
                         <ul
                             class="w-80 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                             <li v-for="data in interface" :class="loadClass(data.running)">
-                                <a href="#" @click="loadTraffic(data.name)"><i class="fa-solid fa-gear"></i>
-                                    @{{ data.name }} || @{{ data['mac-address'] }}</a>
+                                <a data-tooltip-target="tooltip-running"  href="#" @click="loadTraffic(data.name)"><i class="fa-solid fa-gear"></i>
+                                    @{{ data.name }} | <small>@{{ data['mac-address'] }}</small></a>
                             </li>
                         </ul>
                     </center>
                 </p>
             </div>
         </center>
+        <div id="tooltip-running" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Interface Running
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
     </div>
+
+    
 
 
     <script>
@@ -72,7 +80,7 @@
        
       
         var newDate =[];
-        for (let index = 0; index < 10; index++) {
+        for (let index = 0; index < 30; index++) {
             var localDate = theDate.local();
             localDate = localDate.add(1, "minutes");
            
@@ -91,7 +99,9 @@
             data: {
                 interface: null,
                 myChart: null,
-                interface_name: null
+                interface_name: null,
+                tx_text : null,
+                rx_text : null
             },
             methods: {
                 initChart: function() {
@@ -143,7 +153,8 @@
                                     var data = $this.myChart.data;
                                     data.datasets[0].data.push(tx);
                                     data.datasets[1].data.push(rx);
-                                    console.log(tx);
+                                    $this.tx_text = 'Tx : '+Number(tx).toFixed(2) + ' Mbps';
+                                    $this.rx_text = "Rx : "+Number(rx).toFixed(2) + ' Mbps';
                                     $this.myChart.update();
                                     
                                 }

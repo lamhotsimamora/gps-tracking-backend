@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'user-add-coordinate'
+        'user-add-coordinate',
+        'api-login-user-android'
     ];
 }

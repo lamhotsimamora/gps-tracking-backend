@@ -32,6 +32,10 @@ Route::get('/admin-data',function(){
     return view("admin-data");
 })->middleware(AdminMiddleware::class);
 
+Route::get('/admin-user',function(){
+    return view("admin-user");
+})->middleware(AdminMiddleware::class);
+
 Route::get('/login-mikrotik',function(Request $request){
     if ($request->session()->has('ip')) {
         return redirect('/mikrotik-dashboard');
@@ -41,11 +45,21 @@ Route::get('/login-mikrotik',function(Request $request){
 
 Route::post('/admin-load-data-map', [AdminController::class, 'loadDataMap'])->middleware(AdminMiddleware::class);
 
-Route::post('/user-add-coordinate', [UserController::class, 'addCoordinate'])->middleware(SessionMiddleware::class);
+Route::post('/user-add-coordinate', [UserController::class, 'addCoordinate']);
+
+Route::post('/admin-api-add-user', [AdminController::class, 'addUser'])->middleware(AdminMiddleware::class);
 
 Route::post('/admin-load-all-data-map', [AdminController::class, 'loadAllDataMap'])->middleware(AdminMiddleware::class);
 
+Route::post('/admin-load-all-data-user', [AdminController::class, 'loadAllUser'])->middleware(AdminMiddleware::class);
+
 Route::post('/admin-api-delete-tracking', [AdminController::class, 'deleteTracking'])->middleware(SessionMiddleware::class);
+
+Route::post('/admin-api-delete-user', [AdminController::class, 'deleteUser'])->middleware(AdminMiddleware::class);
+
+
+Route::post('/api-login-user-android', [UserController::class, 'loginUserAndroid']);
+
 
 Route::post('/api-login-admin', [AdminController::class, 'loginAdmin']);
 

@@ -5,22 +5,48 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tracking;
 use App\Models\Admins;
+use App\Models\Users;
 use App\Models\ViewTracking;
-
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
-    public function loadDataMap()
-    {
-        $data = Tracking::where('date', date('Y-m-d'))->get();
-        if (count($data)>0){
-            return json_encode(array('result'=>true, 'data'=>$data[0]));
-        }else{
-            return json_encode(array('result'=>false));;
-        }
+    public function addUser(Request $request){
+        $username = $request->username;
+        $password = $request->password;
+
+        $user = new Users;
+
+        $user->username = $username;
+        $user->password = _md5($password);
+
+        $user->save();
+
+        return json_encode(array('result'=>true));
+    }
+
+    public function loadDataMap(Request $request)
+    {       
+            $id_user = $request->id_user;
+
+            $data= DB::table('view_tracking')
+            ->where('id_user',$id_user)
+            ->orderBy('id', 'desc')
+            ->first();
+            return json_encode(array('result'=>true, 'data'=>$data));
     }
 
     public function loadAllDataMap(){
-        return json_encode(ViewTracking::all());
+        $data= DB::table('view_tracking')
+        ->orderBy('id', 'desc')
+        ->get();
+        return json_encode($data);
+    }
+
+    public function loadAllUser(){
+        $data= DB::table('users')
+        ->orderBy('id', 'desc')
+        ->get();
+        return json_encode($data);
     }
 
     public function deleteTracking(Request $request){
@@ -29,6 +55,14 @@ class AdminController extends Controller
         $tracking = Tracking::find($id);
 
         return $tracking->delete();
+    }
+
+    public function deleteUser(Request $request){
+        $id = $request->id;
+
+        $users = Users::find($id);
+
+        return $users->delete();
     }
 
     public function loginAdmin(Request $request){

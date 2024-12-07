@@ -38,8 +38,10 @@
                 <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Login Admin</h5>
                 <hr>
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-
-               
+                   <center>
+                    <img class="rounded w-36 h-36" src="./storage/admin.png" alt="Extra large avatar">
+                   </center>
+                    
                 <div class="mb-5">
                     <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                     <input type="username" id="username" v-model="username" ref="username"
@@ -103,7 +105,7 @@
                             });
                             _saveStorage("username", this.username);
                             _saveStorage("password", this.password);
-                            _refresh("/mikrotik-dashboard");
+                            _refresh("/admin");
                         } else {
                             Swal.fire({
                                 title: "Login Failed",

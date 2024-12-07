@@ -38,10 +38,10 @@
                 
                 if (app('request')->session()->has('ip')) {
                     echo '<li> 
-                                          <a href="./mikrotik-dashboard"
-                                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                                        Mikrotik</a>
-                                        </li>';
+                            <a href="./mikrotik-dashboard"
+                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                        Mikrotik</a>
+                        </li>';
                 }
                 
                 ?>
@@ -69,10 +69,10 @@
                 
                 if (app('request')->session()->has('admins')) {
                     echo '<li> 
-                                        <a style="color: red" href="./logout-app"
-                                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                                        Logout App</a>
-                                        </li>';
+                        <a style="color: red" href="./logout-app-admin"
+                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                        Logout App</a>
+                        </li>';
                 }
                 
                 ?>

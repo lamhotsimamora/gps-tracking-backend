@@ -16,7 +16,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
-        #map {
+        #userMap {
             height: 600px;
             width: auto;
         }
@@ -42,11 +42,13 @@
                         an User</label>
                     <select @change="selectCoordinate" id="countries" v-model="usersselected"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                       
-                        <option :id="data.id" v-for="data in users" :name="data.username" :value="data.id">@{{data.username}}</option>
+
+                        <option :id="data.id" v-for="data in users" :name="data.username"
+                            :value="data.id">@{{ data.username }}</option>
                     </select>
                 </form> <br>
-                <button type="button" @click="selectCoordinate" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Get</button>
+                <button type="button" @click="selectCoordinate"
+                    class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Get</button>
 
 
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
@@ -72,7 +74,9 @@
                         d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
                         fill="currentFill" />
                 </svg>
-                <div id="map"></div>
+                <div id="userMap">
+
+                </div>
                 </p>
             </div>
         </center>
@@ -80,6 +84,13 @@
 
 
     <script>
+        var map;
+        var marker;
+
+        map = null;
+
+
+
         const _TOKEN_ = "<?= csrf_token() ?>";
         var app = new Vue({
             el: '#app',
@@ -87,17 +98,17 @@
                 latitude: null,
                 longitude: null,
                 loading: false,
-                usersselected:null,
-                users:null,
-                username:null
+                usersselected: null,
+                users: null,
+                username: null
             },
             methods: {
-                selectCoordinate: function(){
+                selectCoordinate: function() {
                     const id_user = this.usersselected;
                     var username = document.getElementById(id_user);
                     this.username = username.getAttribute('name');
 
-                    if (id_user==null){
+                    if (id_user == null) {
                         Toastify({
                             text: "Select User First !",
                             duration: 3000,
@@ -109,14 +120,14 @@
                     const $this = this;
                     this.loading = true;
                     axios.post('/admin-load-data-map', {
-                            id_user : id_user,
+                            id_user: id_user,
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             var obj = response.data;
                             $this.loading = false;
                             if (obj.result) {
-                               
+
                                 if (obj.data == null) {
                                     Toastify({
                                         text: "Data is null !",
@@ -129,7 +140,7 @@
                                 $this.latitude = obj.data.latitude;
                                 $this.longitude = obj.data.longitude;
                                 $this.setMap($this.latitude, $this.longitude, 15)
-                                
+
                             } else {
                                 $this.latitude = null;
                                 $this.longitude = null;
@@ -145,17 +156,17 @@
                             console.log(error);
                         });
                 },
-                loadUser: function(){
+                loadUser: function() {
                     const $this = this;
-                   
+
                     axios.post('/admin-load-all-data-user', {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             var obj = response.data;
-                           
+
                             if (obj) {
-                               $this.users = obj;
+                                $this.users = obj;
                             }
                         })
                         .catch(function(error) {
@@ -163,21 +174,32 @@
                         });
                 },
                 setMap: function(latitude, longitude, zoom) {
-                    var map = L.map('map').setView([latitude, longitude], zoom);
 
-                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: zoom,
-                        attribution: 'copyright@2024 Deratek'
-                    }).addTo(map);
+                    try {
+                        document.getElementById('userMap').innerHTML =
+                            "<div id='map' style='width: 100%; height: 100%;'></div>";
+                        map = null;
 
-                    var marker = L.marker([latitude, longitude]).addTo(map);
+                        map = L.map('map').setView([latitude, longitude], zoom);
 
-                    marker.bindPopup(this.username + " is here !").openPopup();
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: zoom,
+                            attribution: 'copyright@2024 Deratek'
+                        }).addTo(map);
+
+                        marker = null;
+                        marker = L.marker([latitude, longitude]).addTo(map);
+
+                        marker.bindPopup(this.username + " is here !").openPopup();
+                    } catch (error) {
+                        console.warn(error)
+                    }
+
                 }
             },
             mounted() {
                 const $this = this;
-                
+
                 this.loadUser();
 
             },

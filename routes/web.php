@@ -7,6 +7,7 @@ use App\Helpers\RouterOS;
 use Illuminate\Http\Request;
 use App\Http\Middleware\SessionMiddleware;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\UserMiddleware;
 
 function _md5($string){
     return md5(strlen($string).$string.strlen($string));
@@ -16,7 +17,19 @@ Route::get('/', function () {
     return redirect('/admin');
 });
 
-Route::get('/login',function(Request $request){
+Route::get('/login-user',function(Request $request){
+    $admins = $request->session()->get('users');
+    if ($admins){
+        return redirect('users');
+    }
+    return view("users/login");
+});
+
+Route::get('/users',function(){
+    return view("users/users");
+})->middleware(UserMiddleware::class);
+
+Route::get('/login-admin',function(Request $request){
     $admins = $request->session()->get('admins');
     if ($admins){
         return redirect('admin');
@@ -51,6 +64,8 @@ Route::post('/admin-api-add-user', [AdminController::class, 'addUser'])->middlew
 
 Route::post('/admin-load-all-data-map', [AdminController::class, 'loadAllDataMap'])->middleware(AdminMiddleware::class);
 
+Route::post('/user-load-all-data-map', [UserController::class, 'loadAllData'])->middleware(UserMiddleware::class);
+
 Route::post('/admin-load-all-data-user', [AdminController::class, 'loadAllUser'])->middleware(AdminMiddleware::class);
 
 Route::post('/admin-api-delete-tracking', [AdminController::class, 'deleteTracking'])->middleware(SessionMiddleware::class);
@@ -62,6 +77,9 @@ Route::post('/api-login-user-android', [UserController::class, 'loginUserAndroid
 
 
 Route::post('/api-login-admin', [AdminController::class, 'loginAdmin']);
+
+Route::post('/api-login-users', [UserController::class, 'loginUserWeb']);
+
 
 
 Route::get('/mikrotik-dashboard', function (Request $request) {
@@ -160,9 +178,15 @@ Route::get('/logout-mikrotik', function (Request $request) {
     return redirect('/login-mikrotik');
 });
 
-Route::get('/logout-app', function () {
-    session()->flush();
-    return redirect('/login');
+Route::get('/logout-app-admin', function (Request $request) {
+    $request->session()->forget('admins');
+    return redirect('/login-admin');
+});
+
+Route::get('/logout-app-user', function (Request $request) {
+    $request->session()->forget('users');
+    $request->session()->forget('id_user');
+    return redirect('/login-user');
 });
 
 

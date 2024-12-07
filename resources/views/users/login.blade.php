@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Admin</title>
+    <title>Login User</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
@@ -35,11 +35,11 @@
         <center>
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Login Admin</h5>
+                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Login User</h5>
                 <hr>
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
                    <center>
-                    <img class="rounded w-36 h-36" src="./storage/admin.png" alt="Extra large avatar">
+                    <img class="rounded w-36 h-36" src="./storage/user.jpg" alt="Extra large avatar">
                    </center>
                     
                 <div class="mb-5">
@@ -57,7 +57,8 @@
                
                 <button @click="login" type="button"
                     class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Login</button>
-                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="./login-user">Login User</a>
+                    <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="./login-admin">Login Admin</a>
+              
                 </p>
 
             </div>
@@ -85,7 +86,7 @@
                     }
                   
                     __({
-                        url: '/api-login-admin',
+                        url: '/api-login-users',
                         method: 'post',
                         data: {
                             username: this.username,
@@ -93,7 +94,7 @@
                             _token: _TOKEN_
                         }
                     }).request($response => {
-                        this.showHtmlButtonLogin = "Login"
+                       
                         var obj = JSON.parse($response);
                         if (obj.result) {
                             Swal.fire({
@@ -103,7 +104,7 @@
                             });
                             _saveStorage("username", this.username);
                             _saveStorage("password", this.password);
-                            _refresh("/admin");
+                            _refresh("/users");
                         } else {
                             Swal.fire({
                                 title: "Login Failed",

@@ -87,12 +87,6 @@
             newDate[index] = localDate.format('HH:mm');
         }
 
-        const xValues = newDate;
-      
-        const yValues1 = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
-        const yValues2 = [2, 5, 6, 2, 5, 6, 30, 61, 24, 12, 13];
-
-      
         const _TOKEN_ = "<?= csrf_token() ?>";
         var app = new Vue({
             el: '#app',
@@ -108,7 +102,7 @@
                     this.myChart = new Chart("myChart", {
                         type: "line",
                         data: {
-                            labels: xValues,
+                            labels: newDate,
                             datasets: [{
                                 backgroundColor: "rgba(245, 40, 145, 0.8)",
                                 borderColor: "rgba(245, 40, 145, 0.8)",
@@ -170,7 +164,7 @@
                     this.proccessTraffic(name_ethernet);
                     setInterval(function() {
                         $this.proccessTraffic(name_ethernet);
-                    }, 10000);
+                    }, 50000);
 
                 },
                 loadClass: function(running) {

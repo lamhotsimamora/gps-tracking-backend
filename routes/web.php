@@ -126,7 +126,7 @@ Route::post('/api-load-interface', function (Request $request) {
     $username = $request->session()->get('username');
     $password = $request->session()->get('password');
     $port =$request->session()->get('port');
-
+    dd($ip.$username.$password.$port);
     if ($API->connect($ip, $username, $password, $port)) {
             $API->write('/interface/print');
 

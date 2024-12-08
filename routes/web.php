@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Middleware\SessionMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
+use \RouterOS\Client;
+use \RouterOS\Query;
+
 
 function _md5($string){
     return md5(strlen($string).$string.strlen($string));
@@ -116,27 +119,49 @@ Route::get('/time',function(){
     return date('Y:m:d').' '.date('H:i');
 });
 
+
+
 Route::post('/api-load-interface', function (Request $request) {
+
+        $ip = $request->session()->get('ip');
+        $username = $request->session()->get('username');
+        $password = $request->session()->get('password');
+        $port = $request->session()->get('port');
+        $port = (int) $port;
+
+        // Initiate client with config object
+        $client = new Client([
+            'host' => $ip,
+            'user' => $username,
+            'pass' => $password,
+            'port' => $port,
+        ]);
+
+        // Create "where" Query object for RouterOS
+        $query =
+            (new Query('/interface/print'));
+
+        // Send query and read response from RouterOS
+        $response = $client->query($query)->read();
+
+        echo json_encode($response);
   
-    $API = new RouterOS();
+    // $API = new RouterOS();
 
-    $API->debug = false;
+    // $API->debug = false;
 
-    $ip = $request->session()->get('ip');
-    $username = $request->session()->get('username');
-    $password = $request->session()->get('password');
-    $port =$request->session()->get('port');
+   
  
-    if ($API->connect($ip, $username, $password, $port)) {
-            $API->write('/interface/ethernet/print');
+    // if ($API->connect($ip, $username, $password, $port)) {
+    //         $API->write('/interface/ethernet/print');
 
-            $READ = $API->read(false);
-            $ARRAY = $API->parseResponse($READ);
+    //         $READ = $API->read(false);
+    //         $ARRAY = $API->parseResponse($READ);
 
-            echo json_encode($ARRAY);
+    //         echo json_encode($ARRAY);
 
-            $API->disconnect();
-    }
+    //         $API->disconnect();
+    // }
     
 })->middleware(SessionMiddleware::class);
 

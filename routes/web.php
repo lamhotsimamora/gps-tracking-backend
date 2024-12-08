@@ -129,40 +129,17 @@ Route::post('/api-load-interface', function (Request $request) {
         $port = $request->session()->get('port');
         $port = (int) $port;
 
-        // Initiate client with config object
         $client = new Client([
             'host' => $ip,
             'user' => $username,
             'pass' => $password,
             'port' => $port,
         ]);
-
-        // Create "where" Query object for RouterOS
         $query =
             (new Query('/interface/print'));
-
-        // Send query and read response from RouterOS
         $response = $client->query($query)->read();
-
         echo json_encode($response);
   
-    // $API = new RouterOS();
-
-    // $API->debug = false;
-
-   
- 
-    // if ($API->connect($ip, $username, $password, $port)) {
-    //         $API->write('/interface/ethernet/print');
-
-    //         $READ = $API->read(false);
-    //         $ARRAY = $API->parseResponse($READ);
-
-    //         echo json_encode($ARRAY);
-
-    //         $API->disconnect();
-    // }
-    
 })->middleware(SessionMiddleware::class);
 
 Route::post('api-load-traffic',function(Request $request){
@@ -182,7 +159,6 @@ Route::post('api-load-traffic',function(Request $request){
             "once" => "",
             ));
 
-            $rows = array(); $rows2 = array();
 
             $ftx = $getinterfacetraffic[0]['tx-bits-per-second'];
             $frx = $getinterfacetraffic[0]['rx-bits-per-second'];

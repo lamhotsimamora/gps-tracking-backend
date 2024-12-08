@@ -120,7 +120,7 @@ Route::post('/api-load-interface', function (Request $request) {
   
     $API = new RouterOS();
 
-    $API->debug = true;
+    $API->debug = false;
 
     $ip = $request->session()->get('ip');
     $username = $request->session()->get('username');
@@ -128,7 +128,7 @@ Route::post('/api-load-interface', function (Request $request) {
     $port =$request->session()->get('port');
  
     if ($API->connect($ip, $username, $password, $port)) {
-            $API->write('/interface/print');
+            $API->write('/interface/ethernet/print');
 
             $READ = $API->read(false);
             $ARRAY = $API->parseResponse($READ);

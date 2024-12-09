@@ -177,8 +177,12 @@
                 },
                 loadData: function() {
                     const $this = this;
-                    axios.post('/api-load-interface', {
-                            _token: _TOKEN_
+                    axios.post('http://localhost:3000/api-load-interface', {
+                            _token: '912381237123jasjdasjdasdnsadnsad293123asdsad',
+                            ip : '9.1.5.1',
+                            port : '8728',
+                            username : 'pdr',
+                            password : 'pdr12345'
                         })
                         .then(function(response) {
                             var obj = response.data;

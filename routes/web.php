@@ -135,8 +135,9 @@ Route::post('/api-load-interface', function (Request $request) {
             'pass' => $password,
             'port' => $port,
         ]);
-        $query =
-            (new Query('/interface/print'));
+
+        $query =(new Query('/interface/print'));
+
         $response = $client->query($query)->read();
         echo json_encode($response);
   

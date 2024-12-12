@@ -51,6 +51,16 @@
 
                 <center><canvas id="myChart" style="width:100%;max-width:700px"></canvas></center>
                 <hr>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                    CPU : @{{cpu}}
+                </span>
+                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
+                    Memory : @{{memory}}
+                </span>
+                <span class="bg-pink-100 text-pink-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">
+                    Uptime : @{{uptime}}
+                </span>
+
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
                     <center>
                         <ul
@@ -62,6 +72,7 @@
                         </ul>
                     </center>
                 </p>
+                <
             </div>
         </center>
         <div id="tooltip-running" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
@@ -95,9 +106,33 @@
                 myChart: null,
                 interface_name: null,
                 tx_text : null,
-                rx_text : null
+                rx_text : null,
+                cpu : null,
+                memory : null,
+                uptime : null
             },
             methods: {
+                loadCpu: function(){
+                    const $this = this;
+                    axios.post('./api-load-cpu', {
+                            _token: _TOKEN_,
+                            ip : this.ip,
+                            port : this.port,
+                            username : this.username,
+                            password : this.password
+                        })
+                        .then(function(response) {
+                            var obj = response.data;
+                            if (obj) {
+                                $this.cpu = obj[0].cpu + " | Board "+obj[0]['board-name'];
+                                $this.memory = obj[0]['total-memory']/1000000;
+                                $this.uptime	 = obj[0]['uptime'];
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
                 initChart: function() {
                     this.myChart = new Chart("myChart", {
                         type: "line",
@@ -199,6 +234,7 @@
                 const $this = this;
                 this.loadData()
                 this.initChart()
+                this.loadCpu()
             },
         })
     </script>

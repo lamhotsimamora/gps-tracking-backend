@@ -169,7 +169,7 @@
                             if (obj) {
                                 Swal.fire({
                                     title: "Success !",
-                                    text: "Delete student success",
+                                    text: "Delete user success",
                                     icon: "success"
                                 });
                                 $this.loadData()

@@ -47,8 +47,8 @@
                             :value="data.id">@{{ data.username }}</option>
                     </select>
                 </form> <br>
-                <button type="button" @click="selectCoordinate"
-                    class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Get</button>
+                {{-- <button type="button" @click="selectCoordinate"
+                    class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Get</button> --}}
 
 
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
@@ -89,8 +89,7 @@
 
         map = null;
 
-
-
+        
         const _TOKEN_ = "<?= csrf_token() ?>";
         var app = new Vue({
             el: '#app',
@@ -105,7 +104,15 @@
             methods: {
                 selectCoordinate: function() {
                     const id_user = this.usersselected;
+                    if (id_user==null)
+                    {
+                        return;
+                    }
                     var username = document.getElementById(id_user);
+                    if (username==null)
+                    {
+                        return;
+                    }
                     this.username = username.getAttribute('name');
 
                     if (id_user == null) {
@@ -202,6 +209,9 @@
 
                 this.loadUser();
 
+                setInterval(() => {
+                    this.selectCoordinate()
+                }, 5000);
             },
         })
     </script>

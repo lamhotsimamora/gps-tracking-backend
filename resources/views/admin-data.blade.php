@@ -126,7 +126,7 @@
                             if (obj) {
                                 Swal.fire({
                                     title: "Success !",
-                                    text: "Delete student success",
+                                    text: "Delete tracking success",
                                     icon: "success"
                                 });
                                 $this.loadData()

@@ -12,6 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js "></script>
     <script src="https://kit.fontawesome.com/672dd512a0.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
         < /scrip> <
         script src = "https://cdn.jsdelivr.net/npm/sweetalert2@11" >
@@ -41,6 +43,8 @@
     <div id="app" class="container mx-auto">
         <center>
 
+            <a href="./mikrotik-dashboard" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Reload</a>
+
 
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -66,7 +70,7 @@
                         <ul
                             class="w-80 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                             <li v-for="data in interface" :class="loadClass(data.running)">
-                                <a data-tooltip-target="tooltip-running"  href="#" @click="loadTraffic(data.name)"><i class="fa-solid fa-gear"></i>
+                                <a data-tooltip-target="tooltip-running"  href="#" @click="loadTraffic(data)"><i class="fa-solid fa-gear"></i>
                                     @{{ data.name }} | <small>@{{ data['mac-address'] }}</small></a>
                             </li>
                         </ul>
@@ -168,6 +172,7 @@
                 },
                 proccessTraffic:function(name_ethernet){
                     const $this = this;
+
                     axios.post('/api-load-traffic', {
                                 _token: _TOKEN_,
                                 ethernet: name_ethernet
@@ -192,13 +197,21 @@
                                 console.log(error);
                             });
                 },
-                loadTraffic: function(name_ethernet) {
-
+                loadTraffic: function(data) {
+                    console.log(data.running)
+                    if (data.running==='false'){
+                        Swal.fire({
+                                title: "Uppz",
+                                text: "Interface {" + data.name + "} is not running !",
+                                icon: "error"
+                            });
+                        return;
+                    }
                     const $this = this;
-                    this.interface_name = name_ethernet;
-                    this.proccessTraffic(name_ethernet);
+                    this.interface_name = data.name;
+                    this.proccessTraffic(data.name);
                     setInterval(function() {
-                        $this.proccessTraffic(name_ethernet);
+                        $this.proccessTraffic(data.name);
                     }, 50000);
 
                 },

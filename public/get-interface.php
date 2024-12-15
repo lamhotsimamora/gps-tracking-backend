@@ -14,7 +14,7 @@ if (isset($_POST)) {
     $API->debug = false;
 
     if ($API->connect($ip, $username, $password,$port)) {
-        $API->write('/interface/getall');
+        $API->write('/interface/print');
 
         $READ = $API->read(false);
         $ARRAY = $API->parseResponse($READ);

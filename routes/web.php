@@ -88,7 +88,11 @@ Route::post('/api-login-users', [UserController::class, 'loginUserWeb']);
 Route::get('/mikrotik-dashboard', function (Request $request) {
     $datetime =  now();
 
-    $data = array('ip' => $request->session()->get('ip'),'datetime'=>$datetime);
+    $data = array('ip' => $request->session()->get('ip'),
+                    'datetime'=>$datetime,
+                    'username'=>$request->session()->get('username'),
+                    'password'=>$request->session()->get('password'),
+                    'port'=>$request->session()->get('port'));
    
     return view('mikrotik-dashboard', $data);
 })->middleware(SessionMiddleware::class);

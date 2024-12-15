@@ -65,11 +65,15 @@
                 </span>
                 <span
                     class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
-                    Memory : @{{ memory }}
+                    Memory : @{{ memory }} MB
                 </span>
                 <span
                     class="bg-pink-100 text-pink-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">
                     Uptime : @{{ uptime }}
+                </span>
+                <span
+                    class="bg-green-100 text-pink-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">
+                    Date : @{{ date }}
                 </span>
 
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
@@ -103,11 +107,11 @@
 
 
         var newDate = [];
-        for (let index = 0; index < 30; index++) {
+        for (let index = 0; index < 60; index++) {
             var localDate = theDate.local();
-            localDate = localDate.add(1, "minutes");
+            localDate = localDate.add(1, "second");
 
-            newDate[index] = localDate.format('HH:mm');
+            newDate[index] = localDate.format('HH:mm:ss');
         }
 
         const ip = "<?= $ip ?>";
@@ -127,9 +131,33 @@
                 rx_text: null,
                 cpu: null,
                 memory: null,
-                uptime: null
+                uptime: null,
+                date:null
             },
             methods: {
+                loadDate:function(){
+                    const $this = this;
+                    axios.post('./get-date.php', {
+                            _token: _TOKEN_,
+                            ip: ip,
+                            port: port,
+                            username: username,
+                            password: password
+                        }, {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                        })
+                        .then(function(response) {
+                            var obj = response.data;
+                            if (obj) {
+                                $this.date = obj[0]['date'];
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
                 loadCpu: function() {
                     const $this = this;
                     axios.post('./get-cpu.php', {
@@ -230,7 +258,7 @@
                     this.proccessTraffic(data.name);
                     setInterval(function() {
                         $this.proccessTraffic(data.name);
-                    }, 50000);
+                    }, 2000);
 
                 },
                 loadClass: function(running) {
@@ -270,6 +298,7 @@
                 this.loadDataInterface()
                 this.initChart()
                 this.loadCpu()
+                this.loadDate()
             },
         })
     </script>

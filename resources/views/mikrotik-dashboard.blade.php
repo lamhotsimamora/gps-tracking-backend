@@ -104,7 +104,7 @@
         moment.locale();
         var now = "<?= $datetime ?>";
         var theDate = moment(now);
-
+        const SERVER = 'http://103.178.153.220/public/index.php/';
 
         var newDate = [];
         for (let index = 0; index < 60; index++) {
@@ -137,7 +137,7 @@
             methods: {
                 loadDate:function(){
                     const $this = this;
-                    axios.post('./get-date.php', {
+                    axios.post(SERVER+'get-date.php', {
                             _token: _TOKEN_,
                             ip: ip,
                             port: port,
@@ -160,7 +160,7 @@
                 },
                 loadCpu: function() {
                     const $this = this;
-                    axios.post('./get-cpu.php', {
+                    axios.post(SERVER+'get-cpu.php', {
                             _token: _TOKEN_,
                             ip: ip,
                             port: port,
@@ -219,7 +219,7 @@
                 proccessTraffic: function(name_ethernet) {
                     const $this = this;
 
-                    axios.post('/api-load-traffic', {
+                    axios.post(SERVER+'api-load-traffic', {
                             _token: _TOKEN_,
                             ethernet: name_ethernet
                         })
@@ -271,7 +271,7 @@
                 },
                 loadDataInterface: function() {
                     const $this = this;
-                    axios.post('./get-interface.php', {
+                    axios.post(SERVER+'get-interface.php', {
                             _token: _TOKEN_,
                             ip: ip,
                             port: port,

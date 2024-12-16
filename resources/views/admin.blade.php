@@ -89,7 +89,7 @@
 
         map = null;
 
-        
+        const SERVER = 'http://103.178.153.220/public/index.php/';
         const _TOKEN_ = "<?= csrf_token() ?>";
         var app = new Vue({
             el: '#app',
@@ -126,7 +126,7 @@
                     }
                     const $this = this;
                     this.loading = true;
-                    axios.post('/admin-load-data-map', {
+                    axios.post(SERVER+'admin-load-data-map', {
                             id_user: id_user,
                             _token: _TOKEN_
                         })
@@ -166,7 +166,7 @@
                 loadUser: function() {
                     const $this = this;
 
-                    axios.post('/admin-load-all-data-user', {
+                    axios.post(SERVER+'admin-load-all-data-user', {
                             _token: _TOKEN_
                         })
                         .then(function(response) {

@@ -109,6 +109,7 @@
 
     <script>
         const _TOKEN_ = "<?= csrf_token() ?>";
+        const SERVER = 'http://103.178.153.220/public/index.php/';
         var app = new Vue({
             el: '#app',
             data: {
@@ -117,7 +118,7 @@
             methods: {
                 deleteData : function(id){
                     const $this = this;
-                    axios.post('/admin-api-delete-tracking', {
+                    axios.post(SERVER+'/admin-api-delete-tracking', {
                             _token: _TOKEN_,
                             id: id
                         })
@@ -138,7 +139,7 @@
                 },
                 loadData: function() {
                     const $this = this;
-                    axios.post('/admin-load-all-data-map', {
+                    axios.post(SERVER+'/admin-load-all-data-map', {
                             _token: _TOKEN_
                         })
                         .then(function(response) {

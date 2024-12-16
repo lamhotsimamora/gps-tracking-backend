@@ -118,7 +118,7 @@
             methods: {
                 deleteData : function(id){
                     const $this = this;
-                    axios.post(SERVER+'/admin-api-delete-tracking', {
+                    axios.post(SERVER+'admin-api-delete-tracking', {
                             _token: _TOKEN_,
                             id: id
                         })
@@ -139,7 +139,7 @@
                 },
                 loadData: function() {
                     const $this = this;
-                    axios.post(SERVER+'/admin-load-all-data-map', {
+                    axios.post(SERVER+'admin-load-all-data-map', {
                             _token: _TOKEN_
                         })
                         .then(function(response) {

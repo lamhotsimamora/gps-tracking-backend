@@ -67,6 +67,8 @@
 
     <script>
         const _TOKEN_ = "<?= csrf_token() ?>";
+        const SERVER = 'http://103.178.153.220/public/index.php/';
+
         var app = new Vue({
             el: '#app',
             data: {
@@ -85,7 +87,7 @@
                     }
                   
                     __({
-                        url: '/api-login-admin',
+                        url: SERVER+'api-login-admin',
                         method: 'post',
                         data: {
                             username: this.username,
@@ -103,7 +105,7 @@
                             });
                             _saveStorage("username", this.username);
                             _saveStorage("password", this.password);
-                            _refresh("/admin");
+                            _refresh(SERVER+"admin");
                         } else {
                             Swal.fire({
                                 title: "Login Failed",

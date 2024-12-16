@@ -39,7 +39,7 @@
                 <hr>
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
                    <center>
-                    <img class="rounded w-36 h-36" src="./storage/user.jpg" alt="Extra large avatar">
+                    <img class="rounded w-36 h-36" src="./public/storage/user.jpg" alt="Extra large avatar">
                    </center>
                     
                 <div class="mb-5">

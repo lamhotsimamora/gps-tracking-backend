@@ -137,7 +137,7 @@
             methods: {
                 loadDate:function(){
                     const $this = this;
-                    axios.post(SERVER+'get-date.php', {
+                    axios.post(SERVER+'api-load-date', {
                             _token: _TOKEN_,
                             ip: ip,
                             port: port,
@@ -160,7 +160,7 @@
                 },
                 loadCpu: function() {
                     const $this = this;
-                    axios.post(SERVER+'get-cpu.php', {
+                    axios.post(SERVER+'api-load-cpu', {
                             _token: _TOKEN_,
                             ip: ip,
                             port: port,
@@ -271,7 +271,7 @@
                 },
                 loadDataInterface: function() {
                     const $this = this;
-                    axios.post(SERVER+'get-interface.php', {
+                    axios.post(SERVER+'api-load-interface', {
                             _token: _TOKEN_,
                             ip: ip,
                             port: port,

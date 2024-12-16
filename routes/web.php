@@ -145,6 +145,28 @@ Route::post('/api-load-cpu', function (Request $request) {
 
 })->middleware(SessionMiddleware::class);
 
+Route::post('/api-load-date', function (Request $request) {
+
+    $ip = $request->session()->get('ip');
+    $username = $request->session()->get('username');
+    $password = $request->session()->get('password');
+    $port = $request->session()->get('port');
+    $port = (int) $port;
+
+    $client = new Client([
+        'host' => $ip,
+        'user' => $username,
+        'pass' => $password,
+        'port' => $port,
+    ]);
+
+    $query =(new Query('/system/clock/print'));
+
+    $response = $client->query($query)->read();
+    echo json_encode($response);
+
+})->middleware(SessionMiddleware::class);
+
 Route::post('/api-load-interface', function (Request $request) {
 
         $ip = $request->session()->get('ip');

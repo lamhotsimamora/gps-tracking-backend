@@ -83,8 +83,6 @@ Route::post('/api-login-admin', [AdminController::class, 'loginAdmin']);
 
 Route::post('/api-login-users', [UserController::class, 'loginUserWeb']);
 
-
-
 Route::get('/mikrotik-dashboard', function (Request $request) {
     $datetime =  now();
 
@@ -306,7 +304,7 @@ Route::post('/api-load-cpu-user', function (Request $request) {
     $response = $client->query($query)->read();
     echo json_encode($response);
 
-})->middleware(SessionMiddleware::class);
+})->middleware(UserMiddleware::class);
 
 Route::post('/api-load-date-user', function (Request $request) {
 
@@ -328,7 +326,7 @@ Route::post('/api-load-date-user', function (Request $request) {
     $response = $client->query($query)->read();
     echo json_encode($response);
 
-})->middleware(SessionMiddleware::class);
+})->middleware(UserMiddleware::class);
 
 Route::post('/api-load-interface-user', function (Request $request) {
 
@@ -350,7 +348,7 @@ Route::post('/api-load-interface-user', function (Request $request) {
         $response = $client->query($query)->read();
         echo json_encode($response);
   
-})->middleware(SessionMiddleware::class);
+})->middleware(UserMiddleware::class);
 
 Route::post('api-load-traffic-user',function(Request $request){
     $API = new RouterOS();
@@ -379,4 +377,4 @@ Route::post('api-load-traffic-user',function(Request $request){
 
             echo json_encode($data);
     }
-})->middleware(SessionMiddleware::class);
+})->middleware(UserMiddleware::class);

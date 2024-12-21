@@ -239,5 +239,5 @@ Route::get('/logout-app-user', function (Request $request) {
 
 
 Route::get('/md5',function(){
-    return _md5('admin');
+    return _md5('derania65656t');
 });

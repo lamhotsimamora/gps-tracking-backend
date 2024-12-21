@@ -76,15 +76,19 @@
     <script>
         const _TOKEN_ = "<?= csrf_token() ?>";
         const SERVER = 'http://derania.com/public/index.php/';
-        //const SERVER = 'http://127.0.0.1:8000/';
+       // const SERVER = 'http://127.0.0.1:8000/';
 
+        const ip = "<?= $ip ?>";
+        const username = "<?= $username ?>";
+        const password = "<?= $password ?>";
+        const port = "<?= $port ?>";
         var app = new Vue({
             el: '#app',
             data: {
-                ip: null,
-                username: null,
-                password: null,
-                port: 8728
+                ip: ip,
+                username: username,
+                password: password,
+                port: port
             },
             methods: {
                 login: function() {

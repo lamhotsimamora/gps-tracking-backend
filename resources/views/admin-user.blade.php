@@ -135,7 +135,9 @@
     <script>
         
         const _TOKEN_ = "<?= csrf_token() ?>";
-        const SERVER = 'http://derania.com/public/index.php/';
+       const SERVER = 'http://derania.com/public/index.php/';
+        //const SERVER = 'http://127.0.0.1:8000/';
+        
         var modal = new Vue({
             el : "#default-modal",
             data : {

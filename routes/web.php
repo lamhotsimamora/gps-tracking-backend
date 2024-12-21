@@ -53,10 +53,16 @@ Route::get('/admin-user',function(){
 })->middleware(AdminMiddleware::class);
 
 Route::get('/login-mikrotik',function(Request $request){
-    if ($request->session()->has('ip')) {
-        return redirect('/mikrotik-dashboard');
-    }
-    return view("login-mikrotik");
+    // if ($request->session()->has('ip')) {
+    //     return redirect('/mikrotik-dashboard');
+    // }
+
+    $data = array('ip' => $request->session()->get('ip'),
+                'username'=>$request->session()->get('username'),
+                'password'=>$request->session()->get('password'),
+                'port'=>$request->session()->get('port'));
+
+    return view("login-mikrotik",$data);
 })->middleware(AdminMiddleware::class);
 
 Route::post('/admin-load-data-map', [AdminController::class, 'loadDataMap'])->middleware(AdminMiddleware::class);
@@ -217,10 +223,7 @@ Route::post('api-load-traffic',function(Request $request){
 })->middleware(SessionMiddleware::class);
 
 Route::get('/logout-mikrotik', function (Request $request) {
-    $request->session()->forget('ip');
-    $request->session()->forget('username');
-    $request->session()->forget('password');
-    $request->session()->forget('port');
+    
     return redirect('/login-mikrotik');
 });
 
@@ -236,11 +239,15 @@ Route::get('/logout-app-user', function (Request $request) {
 });
 
 Route::get('/login-mikrotik-user',function(Request $request){
-    if ($request->session()->has('ip_user')) {
-        return redirect('/users-mikrotik-dashboard');
-    }
-    return view("users.login-user-mikrotik");
-})->middleware(UserMiddleware::class);
+    // if ($request->session()->has('ip_user')) {
+    //     return redirect('/users-mikrotik-dashboard');
+    // }
+    $data = array('ip' => $request->session()->get('ip'),
+    'username'=>$request->session()->get('username'),
+    'password'=>$request->session()->get('password'),
+    'port'=>$request->session()->get('port'));
+    return view("users.login-user-mikrotik",$data);
+});
 
 Route::get('/users-mikrotik-dashboard',function(Request $request){
     $datetime =  now();
@@ -276,10 +283,7 @@ Route::post('/api-login-mikrotik-user', function (Request $request) {
 });
 
 Route::get('/logout-mikrotik-user', function (Request $request) {
-    $request->session()->forget('ip_user');
-    $request->session()->forget('username_user');
-    $request->session()->forget('password_user');
-    $request->session()->forget('port_user');
+    
     return redirect('/login-mikrotik-user');
 });
 

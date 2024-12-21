@@ -1,0 +1,1 @@
+const SERVER = 'http://derania.com/';

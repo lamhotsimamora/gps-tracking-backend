@@ -82,6 +82,7 @@
         </center>
     </div>
 
+    <script src="./init.js"></script>
 
     <script>
         var map;
@@ -89,7 +90,6 @@
 
         map = null;
 
-        const SERVER = 'http://103.178.153.220/public/index.php/';
         const _TOKEN_ = "<?= csrf_token() ?>";
         var app = new Vue({
             el: '#app',

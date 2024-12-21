@@ -78,8 +78,8 @@
         const port = "<?= $port; ?>";
 
         const _TOKEN_ = "<?= csrf_token() ?>";
-       const SERVER = 'https://derania.com/public/index.php/';
-        //const SERVER = 'http://127.0.0.1:8000/';
+      const SERVER = 'https://derania.com/public/index.php/';
+       // const SERVER = 'http://127.0.0.1:8000/';
         
         var app = new Vue({
             el: '#app',

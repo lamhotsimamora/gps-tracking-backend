@@ -10,7 +10,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
 use \RouterOS\Client;
 use \RouterOS\Query;
-
+use Illuminate\Support\Facades\DB;
 
 function _md5($string){
     return md5(strlen($string).$string.strlen($string));
@@ -28,8 +28,23 @@ Route::get('/login-user',function(Request $request){
     return view("users/login");
 });
 
-Route::get('/users',function(){
-    return view("users/users");
+Route::get('/users',function(Request $request){
+    $id_user = $request->session()->get('id_user');
+
+    $data= DB::table('view_tracking')
+                    ->where('id_user',$id_user)
+                    ->orderBy('id', 'desc')
+                    ->first();
+   
+    $username = $data->{'username'};
+    $latitude = $data->{'latitude'};
+    $longitude = $data->{'longitude'};
+ 
+    $data = array('username'=>$username,
+                   'latitude'=>$latitude,
+                   'longitude'=>$longitude);
+
+    return view("users/users",$data);
 })->middleware(UserMiddleware::class);
 
 Route::get('/login-admin',function(Request $request){

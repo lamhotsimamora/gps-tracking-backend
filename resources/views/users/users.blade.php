@@ -181,7 +181,7 @@
                 },
                 loadData: function() {
                     const $this = this;
-                    axios.post('/user-load-all-data-map', {
+                    axios.post(SERVER+'user-load-all-data-map', {
                             _token: _TOKEN_
                         })
                         .then(function(response) {

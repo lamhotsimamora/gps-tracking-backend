@@ -86,7 +86,7 @@
                     }
                   
                     __({
-                        url: SEVER+'api-login-users',
+                        url: SERVER+'api-login-users',
                         method: 'post',
                         data: {
                             username: this.username,

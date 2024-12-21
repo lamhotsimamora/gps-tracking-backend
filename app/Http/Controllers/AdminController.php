@@ -49,6 +49,21 @@ class AdminController extends Controller
         return json_encode($data);
     }
 
+    public function changePassword(Request $request){
+        $password_old = _md5($request->password_old);
+        $password_new = _md5($request->password_new);
+
+        $count = Admins::where('password', $password_old)->count();
+
+        if ($count>0){
+            $admin = Admins::find(1);
+            $admin->password = $password_new;
+            $admin->save();
+            return json_encode(array('result'=>true));
+        }
+        return json_encode(array('result'=>false));
+    }
+
     public function deleteTracking(Request $request){
         $id = $request->id;
 

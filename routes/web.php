@@ -63,6 +63,10 @@ Route::get('/admin-data',function(){
     return view("admin-data");
 })->middleware(AdminMiddleware::class);
 
+Route::get('/change-password',function(){
+    return view("change-password");
+})->middleware(AdminMiddleware::class);
+
 Route::get('/admin-user',function(){
     return view("admin-user");
 })->middleware(AdminMiddleware::class);
@@ -95,6 +99,8 @@ Route::post('/admin-load-all-data-user', [AdminController::class, 'loadAllUser']
 Route::post('/admin-api-delete-tracking', [AdminController::class, 'deleteTracking'])->middleware(SessionMiddleware::class);
 
 Route::post('/admin-api-delete-user', [AdminController::class, 'deleteUser'])->middleware(AdminMiddleware::class);
+
+Route::post('/api-change-password-admin', [AdminController::class, 'changePassword'])->middleware(AdminMiddleware::class);
 
 
 Route::post('/api-login-user-android', [UserController::class, 'loginUserAndroid']);

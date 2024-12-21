@@ -104,7 +104,7 @@
         var theDate = moment(now);
        
         const SERVER = 'https://derania.com/public/index.php/';
-        //const SERVER = 'http://127.0.0.1:8000/';
+       // const SERVER = 'http://127.0.0.1:8000/';
         
         var newDate = [];
         for (let index = 0; index < 60; index++) {

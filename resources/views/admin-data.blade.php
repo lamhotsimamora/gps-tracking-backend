@@ -108,8 +108,8 @@
   
 
     <script>
-        const SERVER = 'https://derania.com/public/index.php/';
-        //const SERVER = 'http://127.0.0.1:8000/';
+       const SERVER = 'https://derania.com/public/index.php/';
+      //  const SERVER = 'http://127.0.0.1:8000/';
         
         const _TOKEN_ = "<?= csrf_token() ?>";
 

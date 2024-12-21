@@ -242,10 +242,10 @@ Route::get('/login-mikrotik-user',function(Request $request){
     // if ($request->session()->has('ip_user')) {
     //     return redirect('/users-mikrotik-dashboard');
     // }
-    $data = array('ip' => $request->session()->get('ip'),
-    'username'=>$request->session()->get('username'),
-    'password'=>$request->session()->get('password'),
-    'port'=>$request->session()->get('port'));
+    $data = array('ip' => $request->session()->get('ip_user'),
+                    'username'=>$request->session()->get('username_user'),
+                    'password'=>$request->session()->get('password_user'),
+                    'port'=>$request->session()->get('port_user'));
     return view("users.login-user-mikrotik",$data);
 });
 

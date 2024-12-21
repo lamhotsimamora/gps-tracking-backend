@@ -246,11 +246,11 @@ Route::get('/login-mikrotik-user',function(Request $request){
 
 Route::get('/users-mikrotik-dashboard',function(Request $request){
     $datetime =  now();
-    $data = array('ip' => $request->session()->get('ip'),
+    $data = array('ip' => $request->session()->get('ip_user'),
                     'datetime'=>$datetime,
-                    'username'=>$request->session()->get('username'),
-                    'password'=>$request->session()->get('password'),
-                    'port'=>$request->session()->get('port'));
+                    'username'=>$request->session()->get('username_user'),
+                    'password'=>$request->session()->get('password_user'),
+                    'port'=>$request->session()->get('port_user'));
 
     return view("users/dashboard-mikrotik-user",$data);
 })->middleware(UserMiddleware::class);

@@ -104,7 +104,7 @@
                             });
                             _saveStorage("username", this.username);
                             _saveStorage("password", this.password);
-                            _refresh("/users");
+                            _refresh(SERVER+"users");
                         } else {
                             Swal.fire({
                                 title: "Login Failed",

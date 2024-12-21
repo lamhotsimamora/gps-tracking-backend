@@ -97,15 +97,13 @@
         </div>
     </div>
 
-    <script src="./init.js"></script>
-
-
+  
     <script>
         moment.locale();
         var now = "<?= $datetime ?>";
         var theDate = moment(now);
        
-
+        const SERVER = 'http://derania.com/public/index.php/';
         var newDate = [];
         for (let index = 0; index < 60; index++) {
             var localDate = theDate.local();

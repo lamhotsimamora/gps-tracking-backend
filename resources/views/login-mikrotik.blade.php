@@ -72,12 +72,10 @@
             </div>
         </center>
     </div>
-    <script src="./init.js"></script>
-
-
+  
     <script>
         const _TOKEN_ = "<?= csrf_token() ?>";
-  
+        const SERVER = 'http://derania.com/public/index.php/';
         var app = new Vue({
             el: '#app',
             data: {

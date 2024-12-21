@@ -1,1 +1,1 @@
-const SERVER = 'http://derania.com/';
+const SERVER = 'http://derania.com/public/index.php/';

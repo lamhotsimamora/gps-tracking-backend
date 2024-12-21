@@ -148,7 +148,7 @@
            
         </center>
     </div>
-
+    <script src="./init.js"></script>
 
     <script>
         const _TOKEN_ = "<?= csrf_token() ?>";
@@ -160,7 +160,7 @@
             methods: {
                 deleteData : function(id){
                     const $this = this;
-                    axios.post('/admin-api-delete-tracking', {
+                    axios.post(SERVER+'admin-api-delete-tracking', {
                             _token: _TOKEN_,
                             id: id
                         })

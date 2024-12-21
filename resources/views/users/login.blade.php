@@ -65,7 +65,7 @@
         </center>
     </div>
 
-
+    <script src="./init.js"></script>
     <script>
         const _TOKEN_ = "<?= csrf_token() ?>";
         var app = new Vue({
@@ -86,7 +86,7 @@
                     }
                   
                     __({
-                        url: '/api-login-users',
+                        url: SEVER+'api-login-users',
                         method: 'post',
                         data: {
                             username: this.username,

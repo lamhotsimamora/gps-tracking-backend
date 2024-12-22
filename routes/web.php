@@ -36,9 +36,9 @@ Route::get('/users',function(Request $request){
                     ->orderBy('id', 'desc')
                     ->first();
    
-    $username = $data->{'username'};
-    $latitude = $data->{'latitude'};
-    $longitude = $data->{'longitude'};
+    $username = $data->{'username'} ?? null;
+    $latitude = $data->{'latitude'}?? null;
+    $longitude = $data->{'longitude'}?? null;
  
     $data = array('username'=>$username,
                    'latitude'=>$latitude,

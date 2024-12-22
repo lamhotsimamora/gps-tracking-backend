@@ -182,7 +182,9 @@
                         });
                 },
                 setMap: function(latitude, longitude, zoom) {
-
+                    if (latitude==null || longitude==null){
+                        return;
+                    }
                     try {
                         document.getElementById('userMap').innerHTML =
                             "<div id='map' style='width: 100%; height: 100%;'></div>";
@@ -192,7 +194,7 @@
 
                         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             maxZoom: zoom,
-                            attribution: 'copyright@2024 Deratek'
+                            attribution: 'copyright@2024 Derania'
                         }).addTo(map);
 
                         marker = null;

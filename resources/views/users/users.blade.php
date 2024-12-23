@@ -119,12 +119,9 @@
     </div>
 
     <script>
-         const SERVER = 'https://derania.com/public/index.php/';
+        const SERVER = 'https://derania.com/public/index.php/';
         //const SERVER = 'http://127.0.0.1:8000/';
-
-        const latitude = "<?= $latitude ?>";
-        const longitude = "<?= $longitude ?>";
-        const username = "<?= $username ?>";
+        const id_user =  "<?= $id_user ?>";
 
         const _TOKEN_ = "<?= csrf_token() ?>";
         var app = new Vue({
@@ -212,15 +209,33 @@
                         .catch(function(error) {
                             console.log(error);
                         });
+                },
+                loadUserMap : function(){
+                    const $this = this;
+                    axios.post(SERVER + 'user-load-map', {
+                            _token: _TOKEN_,
+                            id : id_user
+                    })
+                    .then(function(response) {
+                        var obj = response.data;
+                        if (obj) {
+                            const latitude = obj.latitude;
+                            const longitude = obj.longitude;
+                            $this.setMap(latitude,longitude,15);
+
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
                 }
             },
-
             mounted() {
                 const $this = this;
-                this.loadData()
-                this.setMap(latitude, longitude, 15)
+                this.loadData();
+                this.loadUserMap();
                 setInterval(() => {
-                    this.setMap(latitude, longitude, 15)
+                    this.loadUserMap();
                 }, 5000);
             },
         })

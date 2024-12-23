@@ -31,18 +31,8 @@ Route::get('/login-user',function(Request $request){
 Route::get('/users',function(Request $request){
     $id_user = $request->session()->get('id_user');
 
-    $data= DB::table('view_tracking')
-                    ->where('id_user',$id_user)
-                    ->orderBy('id', 'desc')
-                    ->first();
    
-    $username = $data->{'username'} ?? null;
-    $latitude = $data->{'latitude'}?? null;
-    $longitude = $data->{'longitude'}?? null;
- 
-    $data = array('username'=>$username,
-                   'latitude'=>$latitude,
-                   'longitude'=>$longitude);
+    $data = array('id_user'=>$id_user);
 
     return view("users/users",$data);
 })->middleware(UserMiddleware::class);
@@ -101,6 +91,8 @@ Route::post('/admin-api-delete-tracking', [AdminController::class, 'deleteTracki
 Route::post('/admin-api-delete-user', [AdminController::class, 'deleteUser'])->middleware(AdminMiddleware::class);
 
 Route::post('/api-change-password-admin', [AdminController::class, 'changePassword'])->middleware(AdminMiddleware::class);
+
+Route::post('/user-load-map', [UserController::class, 'userLoadMap'])->middleware(UserMiddleware::class);
 
 
 Route::post('/api-login-user-android', [UserController::class, 'loginUserAndroid']);

@@ -79,4 +79,13 @@ class UserController extends Controller
             ->get();
         return json_encode($data);
     }
+
+    public function userLoadMap(Request $request){
+        $id_user = $request->session()->get('id_user');
+        $data= DB::table('view_tracking')
+                    ->where('id_user',$id_user)
+                    ->orderBy('id', 'desc')
+                    ->first();
+        return json_encode($data);
+    }
 }
